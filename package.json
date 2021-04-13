@@ -22,14 +22,9 @@
     "test:node": "tape -r ts-node/register test/*.spec.ts",
     "tsc": "ethereumjs-config-tsc"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint"
-    }
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethereumjs/ethereumjs-util.git"
+    "url": "https://github.com/starcoinorg/stc-util.git"
   },
   "keywords": [
     "ethereum",
