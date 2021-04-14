@@ -3508,6 +3508,11 @@ istanbul@^0.4.1:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
+js-sha3@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.npmjs.org/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -4121,6 +4126,11 @@ netmask@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
   integrity sha1-ICl+idhvb2QA8lDZ9Pa0wZRfzTU=
+
+noble-ed25519@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/noble-ed25519/-/noble-ed25519-1.0.4.tgz#d3beb67d386d1a800b6fb47e499ad4daf6586877"
+  integrity sha512-Sp9F8ukrY5v9PZezW8Q8dI+tbIH5f6i4E2Alb7kPDPgsQA5CgsrM0BVyUoy06/CRH5QoN2QUOVZH+QIXgesNLQ==
 
 node-uuid@~1.4.0, node-uuid@~1.4.7:
   version "1.4.8"
