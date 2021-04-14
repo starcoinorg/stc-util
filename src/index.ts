@@ -5,6 +5,8 @@ const secp256k1 = require('secp256k1')
 const assert = require('assert')
 const createHash = require('create-hash')
 const Buffer = require('safe-buffer').Buffer
+const ed = require('noble-ed25519')
+const sha3_256 = require('js-sha3').sha3_256
 const ethjsUtil = require('ethjs-util')
 Object.assign(exports, ethjsUtil)
 
@@ -314,6 +316,17 @@ export const pubToAddress = function(pubKey: Buffer, sanitize: boolean = false):
 }
 export const publicToAddress = pubToAddress
 
+export const pubToAddress2 = async function(pubKey: Buffer, sanitize: boolean = false): Buffer {
+  pubKey = toBuffer(pubKey)
+  if (sanitize && pubKey.length !== 64) {
+    pubKey = secp256k1.publicKeyConvert(pubKey, false).slice(1)
+  }
+  assert(pubKey.length === 64)
+  // Only take the lower 160bits of the hash
+  return keccak(pubKey).slice(-20)
+}
+export const publicToAddress2 = pubToAddress2
+
 /**
  * Returns the ethereum public key of a given private key.
  * @param privateKey A private key must be 256 bits wide
@@ -323,6 +336,15 @@ export const privateToPublic = function(privateKey: Buffer): Buffer {
   // skip the type flag and use the X, Y points
   return secp256k1.publicKeyCreate(privateKey, false).slice(1)
 }
+
+/**
+ * Returns the ethereum public key of a given private key.
+ * @param privateKey A private key must be 256 bits wide
+ */
+export const privateToPublic2 = async function(privateKey: String): Promise<String> {
+  return await ed.getPublicKey(privateKey);
+}
+
 
 /**
  * Converts a public key to the Ethereum format.

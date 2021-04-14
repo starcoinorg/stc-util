@@ -347,12 +347,12 @@ describe('publicToAddress 0x', function () {
 })
 
 describe('privateToPublic', function () {
-  it('should produce a public key given a private key', async function() {
+  it('should produce a public key given a private key', async function () {
     const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
     const pubKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
-    const r = await ed.getPublicKey(privateKey);
-    assert.equal(r, pubKey);
-  });
+    const r = await ethUtils.privateToPublic2(privateKey)
+    assert.strictEqual(r, pubKey)
+  })
 })
 
 describe('privateToAddress', function () {
@@ -377,7 +377,7 @@ describe('publicToAddress', function () {
     addressHex[addressHex.length] = 0;
     const addressHexSha3 = sha3_256(addressHex);
     const address = addressHexSha3.slice(addressHexSha3.length/2);
-    assert.equal(address, 'b2c4c079d0e139ec8833ea00e80bb21b')
+    assert.strictEqual(address, 'b2c4c079d0e139ec8833ea00e80bb21b')
   })
 })
 
