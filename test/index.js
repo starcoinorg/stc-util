@@ -350,7 +350,7 @@ describe('privateToPublic', function () {
   it('should produce a public key given a private key', async function () {
     const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
     const pubKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
-    const r = await ethUtils.privateToPublicAsync(Buffer.from(privateKey, 'hex'))
+    const r = await ethUtils.privateToPublicED(Buffer.from(privateKey, 'hex'))
     assert.strictEqual(r.toString('hex'), pubKey)
   })
 })
@@ -362,6 +362,15 @@ describe('privateToAddress', function () {
     const privateKey = Buffer.from([234, 84, 189, 197, 45, 22, 63, 136, 201, 58, 176, 97, 87, 130, 207, 113, 138, 46, 251, 158, 81, 167, 152, 154, 171, 27, 8, 6, 126, 156, 28, 95])
     const r = ethUtils.privateToAddress(privateKey).toString('hex')
     assert.equal(r.toString('hex'), address)
+  })
+})
+
+describe('privateToAddressED', function () {
+  it('should produce an address given a private key', async function () {
+    const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
+    const address = 'b2c4c079d0e139ec8833ea00e80bb21b'
+    const r = await ethUtils.privateToAddressED(Buffer.from(privateKey, 'hex'))
+    assert.strictEqual(r.toString('hex'), address)
   })
 })
 

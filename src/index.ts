@@ -344,7 +344,7 @@ export const privateToPublic = function(privateKey: Buffer): Buffer {
  * Returns the ethereum public key of a given private key.
  * @param privateKey A private key must be 256 bits wide
  */
-export const privateToPublicAsync = async function(privateKey: Buffer): Buffer {
+export const privateToPublicED = async function(privateKey: Buffer): Buffer {
   const edGetPublicKey = async function(privateKey: Buffer): Promise<String> {
     const privateKeyString = privateKey.toString('hex')
     return await ed.getPublicKey(privateKeyString)
@@ -463,6 +463,11 @@ export const fromRpcSig = function(sig: string): ECDSASignature {
 export const privateToAddress = function(privateKey: Buffer): Buffer {
   console.log('stc privateToAddress 2')
   return publicToAddress(privateToPublic(privateKey))
+}
+
+export const privateToAddressED = async function(privateKey: Buffer): Buffer {
+  const publicKey = await privateToPublicED(privateKey)
+  return publicToAddressED(publicKey)
 }
 
 /**
