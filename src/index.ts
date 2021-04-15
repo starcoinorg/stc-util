@@ -316,16 +316,19 @@ export const pubToAddress = function(pubKey: Buffer, sanitize: boolean = false):
 }
 export const publicToAddress = pubToAddress
 
-export const pubToAddress2 = async function(pubKey: Buffer, sanitize: boolean = false): Buffer {
-  pubKey = toBuffer(pubKey)
-  if (sanitize && pubKey.length !== 64) {
-    pubKey = secp256k1.publicKeyConvert(pubKey, false).slice(1)
+export const pubToAddressED = function(pubKey: Buffer, sanitize: boolean = false): Buffer {
+  assert(pubKey.length === 32)
+  const pubKeyUint8Array = Uint8Array.from(pubKey);
+  const addressUint8Array = new Uint8Array(pubKeyUint8Array.length + 1);
+  for (let i = 0; i < pubKeyUint8Array.length; i++){
+    addressUint8Array[i] = pubKeyUint8Array[i];
   }
-  assert(pubKey.length === 64)
-  // Only take the lower 160bits of the hash
-  return keccak(pubKey).slice(-20)
+  addressUint8Array[addressUint8Array.length] = 0;
+  const addressUint8ArraySha3 = sha3_256(addressUint8Array);
+  const address = addressUint8ArraySha3.slice(addressUint8ArraySha3.length/2);
+  return Buffer.from(address, 'hex')
 }
-export const publicToAddress2 = pubToAddress2
+export const publicToAddressED = pubToAddressED
 
 /**
  * Returns the ethereum public key of a given private key.

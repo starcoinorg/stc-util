@@ -365,21 +365,12 @@ describe('privateToAddress', function () {
   })
 })
 
-describe('publicToAddress', function () {
+describe('publicToAddressED', function () {
   it('should produce an address given a public key', function () {
     const publicKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
-    console.log('publicKey', publicKey)
-    console.log('publicKey Buffer', Buffer.from(publicKey, 'hex'))
-    const publicKeyHex = Uint8Array.from(Buffer.from(publicKey, 'hex'));
-    console.log('publicKeyHex', publicKeyHex);
-    const addressHex = new Uint8Array(publicKeyHex.length + 1);
-    for (var i = 0; i < publicKeyHex.length; i++){
-      addressHex[i] = publicKeyHex[i];
-    }
-    addressHex[addressHex.length] = 0;
-    const addressHexSha3 = sha3_256(addressHex);
-    const address = addressHexSha3.slice(addressHexSha3.length/2);
-    assert.strictEqual(address, 'b2c4c079d0e139ec8833ea00e80bb21b')
+    const address = 'b2c4c079d0e139ec8833ea00e80bb21b'
+    const r = ethUtils.publicToAddressED(Buffer.from(publicKey, 'hex'))
+    assert.strictEqual(r.toString('hex'), address)
   })
 })
 
