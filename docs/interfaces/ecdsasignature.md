@@ -10,9 +10,9 @@
 
 ### Properties
 
-* [r](ecdsasignature.md#r)
-* [s](ecdsasignature.md#s)
-* [v](ecdsasignature.md#v)
+- [r](ecdsasignature.md#r)
+- [s](ecdsasignature.md#s)
+- [v](ecdsasignature.md#v)
 
 ---
 
@@ -20,29 +20,30 @@
 
 <a id="r"></a>
 
-###  r
+### r
 
-**● r**: *`Buffer`*
+**● r**: _`Buffer`_
 
-*Defined in [index.ts:13](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L13)*
+_Defined in [index.ts:13](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L13)_
 
-___
+---
+
 <a id="s"></a>
 
-###  s
+### s
 
-**● s**: *`Buffer`*
+**● s**: _`Buffer`_
 
-*Defined in [index.ts:14](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L14)*
+_Defined in [index.ts:14](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L14)_
 
-___
+---
+
 <a id="v"></a>
 
-###  v
+### v
 
-**● v**: *`number`*
+**● v**: _`number`_
 
-*Defined in [index.ts:12](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L12)*
+_Defined in [index.ts:12](https://github.com/ethereumjs/ethereumjs-util/blob/dd56e02/src/index.ts#L12)_
 
-___
-
+---

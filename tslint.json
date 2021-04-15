@@ -1,3 +1,4 @@
 {
-  "extends": "@ethereumjs/config-tslint"
+  "extends": "@ethereumjs/config-tslint",
+  "include": ["dist/*.ts"]
 }

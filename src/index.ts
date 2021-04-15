@@ -342,9 +342,8 @@ export const privateToPublic = function(privateKey: Buffer): Buffer {
  * @param privateKey A private key must be 256 bits wide
  */
 export const privateToPublic2 = async function(privateKey: String): Promise<String> {
-  return await ed.getPublicKey(privateKey);
+  return await ed.getPublicKey(privateKey)
 }
-
 
 /**
  * Converts a public key to the Ethereum format.
