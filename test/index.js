@@ -350,8 +350,8 @@ describe('privateToPublic', function () {
   it('should produce a public key given a private key', async function () {
     const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
     const pubKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
-    const r = await ethUtils.privateToPublic2(privateKey)
-    assert.strictEqual(r, pubKey)
+    const r = await ethUtils.privateToPublicAsync(Buffer.from(privateKey, 'hex'))
+    assert.strictEqual(r.toString('hex'), pubKey)
   })
 })
 
@@ -368,8 +368,10 @@ describe('privateToAddress', function () {
 describe('publicToAddress', function () {
   it('should produce an address given a public key', function () {
     const publicKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
+    console.log('publicKey', publicKey)
+    console.log('publicKey Buffer', Buffer.from(publicKey, 'hex'))
     const publicKeyHex = Uint8Array.from(Buffer.from(publicKey, 'hex'));
-    // console.log('hex', publicKeyHex);
+    console.log('publicKeyHex', publicKeyHex);
     const addressHex = new Uint8Array(publicKeyHex.length + 1);
     for (var i = 0; i < publicKeyHex.length; i++){
       addressHex[i] = publicKeyHex[i];
