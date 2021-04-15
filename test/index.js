@@ -2,9 +2,6 @@ const assert = require('assert')
 const ethUtils = require('../dist/index.js')
 const BN = require('bn.js')
 const eip1014Testdata = require('./testdata/eip1014Examples.json')
-const ed = require('noble-ed25519')
-const sha3_256 = require('js-sha3').sha3_256
-
 
 describe('zeros function', function () {
   it('should produce lots of 0s', function () {
@@ -347,11 +344,21 @@ describe('publicToAddress 0x', function () {
 })
 
 describe('privateToPublic', function () {
-  it('should produce a public key given a private key', async function () {
-    const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
-    const pubKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
-    const r = await ethUtils.privateToPublicED(Buffer.from(privateKey, 'hex'))
-    assert.strictEqual(r.toString('hex'), pubKey)
+  it('should produce a public key given a private key', function () {
+    const pubKey = '3a443d8381a6798a70c6ff9304bdc8cb0163c23211d11628fae52ef9e0dca11a001cf066d56a8156fc201cd5df8a36ef694eecd258903fca7086c1fae7441e1d'
+    const privateKey = Buffer.from([234, 84, 189, 197, 45, 22, 63, 136, 201, 58, 176, 97, 87, 130, 207, 113, 138, 46, 251, 158, 81, 167, 152, 154, 171, 27, 8, 6, 126, 156, 28, 95])
+    const r = ethUtils.privateToPublic(privateKey).toString('hex')
+    assert.equal(r.toString('hex'), pubKey)
+  })
+  it('shouldn\'t produce a public key given an invalid private key', function () {
+    const privateKey1 = Buffer.from([234, 84, 189, 197, 45, 22, 63, 136, 201, 58, 176, 97, 87, 130, 207, 113, 138, 46, 251, 158, 81, 167, 152, 154, 171, 27, 8, 6, 126, 156, 28, 95, 42])
+    const privateKey2 = Buffer.from([234, 84, 189, 197, 45, 22, 63, 136, 201, 58, 176, 97, 87, 130, 207, 113, 138, 46, 251, 158, 81, 167, 152, 154, 171, 27, 8, 6, 126, 156, 28])
+    assert.throws(function () {
+      ethUtils.privateToPublic(privateKey1)
+    })
+    assert.throws(function () {
+      ethUtils.privateToPublic(privateKey2)
+    })
   })
 })
 
@@ -362,6 +369,15 @@ describe('privateToAddress', function () {
     const privateKey = Buffer.from([234, 84, 189, 197, 45, 22, 63, 136, 201, 58, 176, 97, 87, 130, 207, 113, 138, 46, 251, 158, 81, 167, 152, 154, 171, 27, 8, 6, 126, 156, 28, 95])
     const r = ethUtils.privateToAddress(privateKey).toString('hex')
     assert.equal(r.toString('hex'), address)
+  })
+})
+
+describe('privateToPublicED', function () {
+  it('should produce a public key given a private key', async function () {
+    const privateKey = 'c228177c66fb41eb5d1f909966b188d8accdd1dda8f33ab064d1dddc71b78eb6'
+    const pubKey = 'ebbcaeafc931beee008e7a8b2ac8fbc51ef0d0c46090d654f113253f699ced40'
+    const r = await ethUtils.privateToPublicED(Buffer.from(privateKey, 'hex'))
+    assert.strictEqual(r.toString('hex'), pubKey)
   })
 })
 
