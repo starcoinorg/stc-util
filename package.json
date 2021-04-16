@@ -17,7 +17,7 @@
     "format:fix": "ethereumjs-config-format-fix",
     "lint": "ethereumjs-config-lint",
     "lint:fix": "ethereumjs-config-lint-fix",
-    "test": "npm run lint && npm run test:node",
+    "test": "npm run test:node",
     "test:node": "npm run build && istanbul test mocha -- --reporter spec",
     "tsc": "ethereumjs-config-tsc",
     "tslint": "ethereumjs-config-tslint",
