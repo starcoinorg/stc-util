@@ -84,14 +84,14 @@ export { secp256k1 }
  * Returns a buffer filled with 0s.
  * @param bytes the number of bytes the buffer should be
  */
-export const zeros = function(bytes: number): Buffer {
+export const zeros = function (bytes: number): Buffer {
   return Buffer.allocUnsafe(bytes).fill(0)
 }
 
 /**
  * Returns a zero address.
  */
-export const zeroAddress = function(): string {
+export const zeroAddress = function (): string {
   const addressLength = 20
   const addr = zeros(addressLength)
   return bufferToHex(addr)
@@ -105,7 +105,7 @@ export const zeroAddress = function(): string {
  * @param right whether to start padding form the left or right
  * @return (Buffer|Array)
  */
-export const setLengthLeft = function(msg: any, length: number, right: boolean = false) {
+export const setLengthLeft = function (msg: any, length: number, right: boolean = false) {
   const buf = zeros(length)
   msg = toBuffer(msg)
   if (right) {
@@ -131,7 +131,7 @@ export const setLength = setLengthLeft
  * @param length the number of bytes the output should be
  * @return (Buffer|Array)
  */
-export const setLengthRight = function(msg: any, length: number) {
+export const setLengthRight = function (msg: any, length: number) {
   return setLength(msg, length, true)
 }
 
@@ -140,7 +140,7 @@ export const setLengthRight = function(msg: any, length: number) {
  * @param a (Buffer|Array|String)
  * @return (Buffer|Array|String)
  */
-export const unpad = function(a: any) {
+export const unpad = function (a: any) {
   a = ethjsUtil.stripHexPrefix(a)
   let first = a[0]
   while (a.length > 0 && first.toString() === '0') {
@@ -155,7 +155,7 @@ export const stripZeros = unpad
  * Attempts to turn a value into a `Buffer`. As input it supports `Buffer`, `String`, `Number`, null/undefined, `BN` and other objects with a `toArray()` method.
  * @param v the value
  */
-export const toBuffer = function(v: any): Buffer {
+export const toBuffer = function (v: any): Buffer {
   if (!Buffer.isBuffer(v)) {
     if (Array.isArray(v)) {
       v = Buffer.from(v)
@@ -186,7 +186,7 @@ export const toBuffer = function(v: any): Buffer {
  * @param buf `Buffer` object to convert
  * @throws If the input number exceeds 53 bits.
  */
-export const bufferToInt = function(buf: Buffer): number {
+export const bufferToInt = function (buf: Buffer): number {
   return new BN(toBuffer(buf)).toNumber()
 }
 
@@ -194,7 +194,7 @@ export const bufferToInt = function(buf: Buffer): number {
  * Converts a `Buffer` into a hex `String`.
  * @param buf `Buffer` object to convert
  */
-export const bufferToHex = function(buf: Buffer): string {
+export const bufferToHex = function (buf: Buffer): string {
   buf = toBuffer(buf)
   return '0x' + buf.toString('hex')
 }
@@ -203,7 +203,7 @@ export const bufferToHex = function(buf: Buffer): string {
  * Interprets a `Buffer` as a signed integer and returns a `BN`. Assumes 256-bit numbers.
  * @param num Signed integer value
  */
-export const fromSigned = function(num: Buffer): BN {
+export const fromSigned = function (num: Buffer): BN {
   return new BN(num).fromTwos(256)
 }
 
@@ -211,7 +211,7 @@ export const fromSigned = function(num: Buffer): BN {
  * Converts a `BN` to an unsigned integer and returns it as a `Buffer`. Assumes 256-bit numbers.
  * @param num
  */
-export const toUnsigned = function(num: BN): Buffer {
+export const toUnsigned = function (num: BN): Buffer {
   return Buffer.from(num.toTwos(256).toArray())
 }
 
@@ -220,7 +220,7 @@ export const toUnsigned = function(num: BN): Buffer {
  * @param a The input data (Buffer|Array|String|Number)
  * @param bits The Keccak width
  */
-export const keccak = function(a: any, bits: number = 256): Buffer {
+export const keccak = function (a: any, bits: number = 256): Buffer {
   a = toBuffer(a)
   if (!bits) bits = 256
 
@@ -233,7 +233,7 @@ export const keccak = function(a: any, bits: number = 256): Buffer {
  * Creates Keccak-256 hash of the input, alias for keccak(a, 256).
  * @param a The input data (Buffer|Array|String|Number)
  */
-export const keccak256 = function(a: any): Buffer {
+export const keccak256 = function (a: any): Buffer {
   return keccak(a)
 }
 
@@ -241,7 +241,7 @@ export const keccak256 = function(a: any): Buffer {
  * Creates SHA256 hash of the input.
  * @param a The input data (Buffer|Array|String|Number)
  */
-export const sha256 = function(a: any): Buffer {
+export const sha256 = function (a: any): Buffer {
   a = toBuffer(a)
   return createHash('sha256')
     .update(a)
@@ -253,7 +253,7 @@ export const sha256 = function(a: any): Buffer {
  * @param a The input data (Buffer|Array|String|Number)
  * @param padded Whether it should be padded to 256 bits or not
  */
-export const ripemd160 = function(a: any, padded: boolean): Buffer {
+export const ripemd160 = function (a: any, padded: boolean): Buffer {
   a = toBuffer(a)
   const hash = createHash('rmd160')
     .update(a)
@@ -269,14 +269,14 @@ export const ripemd160 = function(a: any, padded: boolean): Buffer {
  * Creates SHA-3 hash of the RLP encoded version of the input.
  * @param a The input data
  */
-export const rlphash = function(a: rlp.Input): Buffer {
+export const rlphash = function (a: rlp.Input): Buffer {
   return keccak(rlp.encode(a))
 }
 
 /**
  * Checks if the private key satisfies the rules of the curve secp256k1.
  */
-export const isValidPrivate = function(privateKey: Buffer): boolean {
+export const isValidPrivate = function (privateKey: Buffer): boolean {
   return secp256k1.privateKeyVerify(privateKey)
 }
 
@@ -286,7 +286,7 @@ export const isValidPrivate = function(privateKey: Buffer): boolean {
  * @param publicKey The two points of an uncompressed key, unless sanitize is enabled
  * @param sanitize Accept public keys in other formats
  */
-export const isValidPublic = function(publicKey: Buffer, sanitize: boolean = false): boolean {
+export const isValidPublic = function (publicKey: Buffer, sanitize: boolean = false): boolean {
   if (publicKey.length === 64) {
     // Convert to SEC1 for secp256k1
     return secp256k1.publicKeyVerify(Buffer.concat([Buffer.from([4]), publicKey]))
@@ -305,7 +305,7 @@ export const isValidPublic = function(publicKey: Buffer, sanitize: boolean = fal
  * @param pubKey The two points of an uncompressed key, unless sanitize is enabled
  * @param sanitize Accept public keys in other formats
  */
-export const pubToAddress = function(pubKey: Buffer, sanitize: boolean = false): Buffer {
+export const pubToAddress = function (pubKey: Buffer, sanitize: boolean = false): Buffer {
   pubKey = toBuffer(pubKey)
   if (sanitize && pubKey.length !== 64) {
     pubKey = secp256k1.publicKeyConvert(pubKey, false).slice(1)
@@ -316,16 +316,16 @@ export const pubToAddress = function(pubKey: Buffer, sanitize: boolean = false):
 }
 export const publicToAddress = pubToAddress
 
-export const pubToAddressED = function(pubKey: Buffer, sanitize: boolean = false): Buffer {
+export const pubToAddressED = function (pubKey: Buffer, sanitize: boolean = false): Buffer {
   assert(pubKey.length === 32)
   const pubKeyUint8Array = Uint8Array.from(pubKey);
   const addressUint8Array = new Uint8Array(pubKeyUint8Array.length + 1);
-  for (let i = 0; i < pubKeyUint8Array.length; i++){
+  for (let i = 0; i < pubKeyUint8Array.length; i++) {
     addressUint8Array[i] = pubKeyUint8Array[i];
   }
   addressUint8Array[addressUint8Array.length] = 0;
   const addressUint8ArraySha3 = sha3_256(addressUint8Array);
-  const address = addressUint8ArraySha3.slice(addressUint8ArraySha3.length/2);
+  const address = addressUint8ArraySha3.slice(addressUint8ArraySha3.length / 2);
   return Buffer.from(address, 'hex')
 }
 export const publicToAddressED = pubToAddressED
@@ -334,7 +334,7 @@ export const publicToAddressED = pubToAddressED
  * Returns the ethereum public key of a given private key.
  * @param privateKey A private key must be 256 bits wide
  */
-export const privateToPublic = function(privateKey: Buffer): Buffer {
+export const privateToPublic = function (privateKey: Buffer): Buffer {
   privateKey = toBuffer(privateKey)
   // skip the type flag and use the X, Y points
   return secp256k1.publicKeyCreate(privateKey, false).slice(1)
@@ -344,8 +344,8 @@ export const privateToPublic = function(privateKey: Buffer): Buffer {
  * Returns the ethereum public key of a given private key.
  * @param privateKey A private key must be 256 bits wide
  */
-export const privateToPublicED = async function(privateKey: Buffer): Buffer {
-  const edGetPublicKey = async function(privateKey: Buffer): Promise<String> {
+export const privateToPublicED = async function (privateKey: Buffer): Buffer {
+  const edGetPublicKey = async function (privateKey: Buffer): Promise<String> {
     const privateKeyString = privateKey.toString('hex')
     return await ed.getPublicKey(privateKeyString)
   }
@@ -358,7 +358,7 @@ export const privateToPublicED = async function(privateKey: Buffer): Buffer {
 /**
  * Converts a public key to the Ethereum format.
  */
-export const importPublic = function(publicKey: Buffer): Buffer {
+export const importPublic = function (publicKey: Buffer): Buffer {
   publicKey = toBuffer(publicKey)
   if (publicKey.length !== 64) {
     publicKey = secp256k1.publicKeyConvert(publicKey, false).slice(1)
@@ -369,7 +369,7 @@ export const importPublic = function(publicKey: Buffer): Buffer {
 /**
  * Returns the ECDSA signature of a message hash.
  */
-export const ecsign = function(
+export const ecsign = function (
   msgHash: Buffer,
   privateKey: Buffer,
   chainId?: number,
@@ -392,7 +392,7 @@ export const ecsign = function(
  * call for a given `message`, or fed to `ecrecover` along with a signature to recover the public key
  * used to produce the signature.
  */
-export const hashPersonalMessage = function(message: any): Buffer {
+export const hashPersonalMessage = function (message: any): Buffer {
   const prefix = toBuffer(`\u0019Ethereum Signed Message:\n${message.length.toString()}`)
   return keccak(Buffer.concat([prefix, message]))
 }
@@ -401,7 +401,7 @@ export const hashPersonalMessage = function(message: any): Buffer {
  * ECDSA public key recovery from signature.
  * @returns Recovered public key
  */
-export const ecrecover = function(
+export const ecrecover = function (
   msgHash: Buffer,
   v: number,
   r: Buffer,
@@ -421,7 +421,7 @@ export const ecrecover = function(
  * Convert signature parameters into the format of `eth_sign` RPC method.
  * @returns Signature
  */
-export const toRpcSig = function(v: number, r: Buffer, s: Buffer, chainId?: number): string {
+export const toRpcSig = function (v: number, r: Buffer, s: Buffer, chainId?: number): string {
   const recovery = calculateSigRecovery(v, chainId)
   if (!isValidSigRecovery(recovery)) {
     throw new Error('Invalid signature v value')
@@ -435,7 +435,7 @@ export const toRpcSig = function(v: number, r: Buffer, s: Buffer, chainId?: numb
  * Convert signature format of the `eth_sign` RPC method to signature parameters
  * NOTE: all because of a bug in geth: https://github.com/ethereum/go-ethereum/issues/2053
  */
-export const fromRpcSig = function(sig: string): ECDSASignature {
+export const fromRpcSig = function (sig: string): ECDSASignature {
   const buf: Buffer = toBuffer(sig)
 
   // NOTE: with potential introduction of chainId this might need to be updated
@@ -460,12 +460,12 @@ export const fromRpcSig = function(sig: string): ECDSASignature {
  * Returns the ethereum address of a given private key.
  * @param privateKey A private key must be 256 bits wide
  */
-export const privateToAddress = function(privateKey: Buffer): Buffer {
+export const privateToAddress = function (privateKey: Buffer): Buffer {
   console.log('stc privateToAddress 2')
   return publicToAddress(privateToPublic(privateKey))
 }
 
-export const privateToAddressED = async function(privateKey: Buffer): Buffer {
+export const privateToAddressED = async function (privateKey: Buffer): Buffer {
   const publicKey = await privateToPublicED(privateKey)
   return publicToAddressED(publicKey)
 }
@@ -473,14 +473,15 @@ export const privateToAddressED = async function(privateKey: Buffer): Buffer {
 /**
  * Checks if the address is a valid. Accepts checksummed addresses too.
  */
-export const isValidAddress = function(address: string): boolean {
-  return /^0x[0-9a-fA-F]{40}$/.test(address)
+export const isValidAddress = function (address: string): boolean {
+  // support both HD Key and ed25519
+  return /^0x[0-9a-fA-F]{32,40}$/.test(address)
 }
 
 /**
  * Checks if a given address is a zero address.
  */
-export const isZeroAddress = function(address: string): boolean {
+export const isZeroAddress = function (address: string): boolean {
   const zeroAddr = zeroAddress()
   return zeroAddr === addHexPrefix(address)
 }
@@ -488,7 +489,7 @@ export const isZeroAddress = function(address: string): boolean {
 /**
  * Returns a checksummed address.
  */
-export const toChecksumAddress = function(address: string): string {
+export const toChecksumAddress = function (address: string): string {
   address = ethjsUtil.stripHexPrefix(address).toLowerCase()
   const hash = keccak(address).toString('hex')
   let ret = '0x'
@@ -507,7 +508,7 @@ export const toChecksumAddress = function(address: string): string {
 /**
  * Checks if the address is a valid checksummed address.
  */
-export const isValidChecksumAddress = function(address: string): boolean {
+export const isValidChecksumAddress = function (address: string): boolean {
   return isValidAddress(address) && toChecksumAddress(address) === address
 }
 
@@ -516,7 +517,7 @@ export const isValidChecksumAddress = function(address: string): boolean {
  * @param from The address which is creating this new address
  * @param nonce The nonce of the from account
  */
-export const generateAddress = function(from: Buffer, nonce: Buffer): Buffer {
+export const generateAddress = function (from: Buffer, nonce: Buffer): Buffer {
   from = toBuffer(from)
   const nonceBN = new BN(nonce)
 
@@ -536,7 +537,7 @@ export const generateAddress = function(from: Buffer, nonce: Buffer): Buffer {
  * @param salt A salt
  * @param initCode The init code of the contract being created
  */
-export const generateAddress2 = function(
+export const generateAddress2 = function (
   from: Buffer | string,
   salt: Buffer | string,
   initCode: Buffer | string,
@@ -558,7 +559,7 @@ export const generateAddress2 = function(
 /**
  * Returns true if the supplied address belongs to a precompiled account (Byzantium).
  */
-export const isPrecompiled = function(address: Buffer | string): boolean {
+export const isPrecompiled = function (address: Buffer | string): boolean {
   const a = unpad(address)
   return a.length === 1 && a[0] >= 1 && a[0] <= 8
 }
@@ -566,7 +567,7 @@ export const isPrecompiled = function(address: Buffer | string): boolean {
 /**
  * Adds "0x" to a given `String` if it does not already start with "0x".
  */
-export const addHexPrefix = function(str: string): string {
+export const addHexPrefix = function (str: string): string {
   if (typeof str !== 'string') {
     return str
   }
@@ -578,7 +579,7 @@ export const addHexPrefix = function(str: string): string {
  * Validate a ECDSA signature.
  * @param homesteadOrLater Indicates whether this is being used on either the homestead hardfork or a later one
  */
-export const isValidSignature = function(
+export const isValidSignature = function (
   v: number,
   r: Buffer,
   s: Buffer,
@@ -618,7 +619,7 @@ export const isValidSignature = function(
  * @param ba (Buffer|Array)
  * @return (Array|String|null)
  */
-export const baToJSON = function(ba: any) {
+export const baToJSON = function (ba: any) {
   if (Buffer.isBuffer(ba)) {
     return `0x${ba.toString('hex')}`
   } else if (ba instanceof Array) {
@@ -640,12 +641,12 @@ export const baToJSON = function(ba: any) {
  * * `allowEmpty`
  * @param data data to be validated against the definitions
  */
-export const defineProperties = function(self: any, fields: any, data: any) {
+export const defineProperties = function (self: any, fields: any, data: any) {
   self.raw = []
   self._fields = []
 
   // attach the `toJSON`
-  self.toJSON = function(label: boolean = false) {
+  self.toJSON = function (label: boolean = false) {
     if (label) {
       type Dict = { [key: string]: string }
       const obj: Dict = {}
