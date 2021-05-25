@@ -479,6 +479,16 @@ export const isValidAddress = function (address: string): boolean {
 }
 
 /**
+ * Checks if the value is a valid receiptIdentifier, more in SIP#22.
+ */
+export const isValidReceiptIdentifier = function (value: string): boolean {
+  // prefix is `stc`
+  // totalLength=37: address only
+  // totalLength=88: address + authKey
+  return /^stc[0-9a-z]{34,85}$/i.test(value)
+}
+
+/**
  * Checks if a given address is a zero address.
  */
 export const isZeroAddress = function (address: string): boolean {
