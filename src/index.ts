@@ -316,7 +316,8 @@ export const pubToAddress = function (pubKey: Buffer, sanitize: boolean = false)
 }
 export const publicToAddress = pubToAddress
 
-export const pubToAddressED = function (pubKey: Buffer, sanitize: boolean = false): Buffer {
+export const pubToAddressED = function (pubKey: Buffer, hdPath: string = `m/44'/101010'/0'/0'`): Buffer {
+  console.log('stc-util pubToAddressED', hdPath, hdPath.split('/')[2] === `101010'`)
   assert(pubKey.length === 32)
   const pubKeyUint8Array = Uint8Array.from(pubKey);
   const addressUint8Array = new Uint8Array(pubKeyUint8Array.length + 1);
@@ -325,7 +326,7 @@ export const pubToAddressED = function (pubKey: Buffer, sanitize: boolean = fals
   }
   addressUint8Array[addressUint8Array.length] = 0;
   const addressUint8ArraySha3 = sha3_256(addressUint8Array);
-  const address = addressUint8ArraySha3.slice(addressUint8ArraySha3.length / 2);
+  const address = hdPath.split('/')[2] === `101010'` ? addressUint8ArraySha3.slice(addressUint8ArraySha3.length / 2) : addressUint8ArraySha3;
   return Buffer.from(address, 'hex')
 }
 export const publicToAddressED = pubToAddressED
