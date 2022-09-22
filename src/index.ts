@@ -5,7 +5,7 @@ const secp256k1 = require('secp256k1')
 const assert = require('assert')
 const createHash = require('create-hash')
 const Buffer = require('safe-buffer').Buffer
-const ed = require('noble-ed25519')
+const ed = require('@starcoin/stc-ed25519')
 const sha3_256 = require('js-sha3').sha3_256
 const ethjsUtil = require('ethjs-util')
 Object.assign(exports, ethjsUtil)
@@ -224,7 +224,7 @@ export const keccak = function (a: any, bits: number = 256): Buffer {
   a = toBuffer(a)
   if (!bits) bits = 256
 
-  return createKeccakHash(`keccak${bits}`)
+  return createKeccakHash(`keccak${ bits }`)
     .update(a)
     .digest()
 }
@@ -393,7 +393,7 @@ export const ecsign = function (
  * used to produce the signature.
  */
 export const hashPersonalMessage = function (message: any): Buffer {
-  const prefix = toBuffer(`\u0019Ethereum Signed Message:\n${message.length.toString()}`)
+  const prefix = toBuffer(`\u0019Ethereum Signed Message:\n${ message.length.toString() }`)
   return keccak(Buffer.concat([prefix, message]))
 }
 
@@ -631,7 +631,7 @@ export const isValidSignature = function (
  */
 export const baToJSON = function (ba: any) {
   if (Buffer.isBuffer(ba)) {
-    return `0x${ba.toString('hex')}`
+    return `0x${ ba.toString('hex') }`
   } else if (ba instanceof Array) {
     const array = []
     for (let i = 0; i < ba.length; i++) {
@@ -661,7 +661,7 @@ export const defineProperties = function (self: any, fields: any, data: any) {
       type Dict = { [key: string]: string }
       const obj: Dict = {}
       self._fields.forEach((field: string) => {
-        obj[field] = `0x${self[field].toString('hex')}`
+        obj[field] = `0x${ self[field].toString('hex') }`
       })
       return obj
     }
@@ -688,12 +688,12 @@ export const defineProperties = function (self: any, fields: any, data: any) {
         v = stripZeros(v)
         assert(
           field.length >= v.length,
-          `The field ${field.name} must not have more ${field.length} bytes`,
+          `The field ${ field.name } must not have more ${ field.length } bytes`,
         )
       } else if (!(field.allowZero && v.length === 0) && field.length) {
         assert(
           field.length === v.length,
-          `The field ${field.name} must have byte length of ${field.length}`,
+          `The field ${ field.name } must have byte length of ${ field.length }`,
         )
       }
 
