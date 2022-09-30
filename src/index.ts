@@ -476,7 +476,8 @@ export const privateToAddressED = async function (privateKey: Buffer): Buffer {
  */
 export const isValidAddress = function (address: string): boolean {
   // support both HD Key and ed25519
-  return /^0x[0-9a-fA-F]{32,40}$/.test(address)
+  // STC: 32,  ETH: 40, APT: 64
+  return /^0x[0-9a-fA-F]{32,64}$/.test(address)
 }
 
 /**
