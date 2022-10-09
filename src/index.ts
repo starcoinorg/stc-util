@@ -317,7 +317,6 @@ export const pubToAddress = function (pubKey: Buffer, sanitize: boolean = false)
 export const publicToAddress = pubToAddress
 
 export const pubToAddressED = function (pubKey: Buffer, hdPath: string = `m/44'/101010'/0'/0'`): Buffer {
-  console.log('stc-util pubToAddressED', hdPath, hdPath.split('/')[2] === `101010'`)
   assert(pubKey.length === 32)
   const pubKeyUint8Array = Uint8Array.from(pubKey);
   const addressUint8Array = new Uint8Array(pubKeyUint8Array.length + 1);
@@ -462,7 +461,6 @@ export const fromRpcSig = function (sig: string): ECDSASignature {
  * @param privateKey A private key must be 256 bits wide
  */
 export const privateToAddress = function (privateKey: Buffer): Buffer {
-  console.log('stc privateToAddress 2')
   return publicToAddress(privateToPublic(privateKey))
 }
 
